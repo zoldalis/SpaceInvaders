@@ -1,0 +1,12 @@
+C:\SpaceInvaders\MainApp\SpaceInvaders\bin\Release\net48\SpaceInvaders.exe.config
+C:\SpaceInvaders\MainApp\SpaceInvaders\bin\Release\net48\SpaceInvaders.exe
+C:\SpaceInvaders\MainApp\SpaceInvaders\bin\Release\net48\SpaceInvaders.pdb
+C:\SpaceInvaders\MainApp\SpaceInvaders\bin\Release\net48\Tachanka.dll
+C:\SpaceInvaders\MainApp\SpaceInvaders\bin\Release\net48\Tachanka.pdb
+C:\SpaceInvaders\MainApp\SpaceInvaders\obj\Release\net48\SpaceInvaders.csprojAssemblyReference.cache
+C:\SpaceInvaders\MainApp\SpaceInvaders\obj\Release\net48\SpaceInvaders.AssemblyInfoInputs.cache
+C:\SpaceInvaders\MainApp\SpaceInvaders\obj\Release\net48\SpaceInvaders.AssemblyInfo.cs
+C:\SpaceInvaders\MainApp\SpaceInvaders\obj\Release\net48\SpaceInvaders.csproj.CoreCompileInputs.cache
+C:\SpaceInvaders\MainApp\SpaceInvaders\obj\Release\net48\SpaceInvaders.csproj.CopyComplete
+C:\SpaceInvaders\MainApp\SpaceInvaders\obj\Release\net48\SpaceInvaders.exe
+C:\SpaceInvaders\MainApp\SpaceInvaders\obj\Release\net48\SpaceInvaders.pdb

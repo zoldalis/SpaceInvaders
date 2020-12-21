@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "IEAZtAeukBASmg0az0qDndn7cFJgLzLm7tJ5E7bdm0UCyvfAxg00is2oI06zq/0Lh6O2sKOFWxY3K5B6jWnF7w==",
+  "success": true,
+  "projectFilePath": "C:\\SpaceInvaders\\MainApp\\Controls\\Controls.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\mikel\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\mikel\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

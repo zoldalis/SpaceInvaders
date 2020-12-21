@@ -1,0 +1,9 @@
+C:\SpaceInvaders\MainApp\Controls\bin\Debug\netstandard2.0\Controls.deps.json
+C:\SpaceInvaders\MainApp\Controls\bin\Debug\netstandard2.0\Controls.dll
+C:\SpaceInvaders\MainApp\Controls\bin\Debug\netstandard2.0\Controls.pdb
+C:\SpaceInvaders\MainApp\Controls\obj\Debug\netstandard2.0\Controls.csprojAssemblyReference.cache
+C:\SpaceInvaders\MainApp\Controls\obj\Debug\netstandard2.0\Controls.AssemblyInfoInputs.cache
+C:\SpaceInvaders\MainApp\Controls\obj\Debug\netstandard2.0\Controls.AssemblyInfo.cs
+C:\SpaceInvaders\MainApp\Controls\obj\Debug\netstandard2.0\Controls.csproj.CoreCompileInputs.cache
+C:\SpaceInvaders\MainApp\Controls\obj\Debug\netstandard2.0\Controls.dll
+C:\SpaceInvaders\MainApp\Controls\obj\Debug\netstandard2.0\Controls.pdb

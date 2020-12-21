@@ -1,32 +1,37 @@
 {
   "format": 1,
   "restore": {
-    "D:\\SpaceInvaders\\MainApp\\SpaceInvaders\\SpaceInvaders.csproj": {}
+    "C:\\SpaceInvaders\\MainApp\\SpaceInvaders\\SpaceInvaders.csproj": {}
   },
   "projects": {
-    "D:\\SpaceInvaders\\MainApp\\SpaceInvaders\\SpaceInvaders.csproj": {
+    "C:\\SpaceInvaders\\MainApp\\SpaceInvaders\\SpaceInvaders.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SpaceInvaders\\MainApp\\SpaceInvaders\\SpaceInvaders.csproj",
+        "projectUniqueName": "C:\\SpaceInvaders\\MainApp\\SpaceInvaders\\SpaceInvaders.csproj",
         "projectName": "SpaceInvaders",
-        "projectPath": "D:\\SpaceInvaders\\MainApp\\SpaceInvaders\\SpaceInvaders.csproj",
+        "projectPath": "C:\\SpaceInvaders\\MainApp\\SpaceInvaders\\SpaceInvaders.csproj",
         "packagesPath": "C:\\Users\\mikel\\.nuget\\packages\\",
-        "outputPath": "D:\\SpaceInvaders\\MainApp\\SpaceInvaders\\obj\\",
+        "outputPath": "C:\\SpaceInvaders\\MainApp\\SpaceInvaders\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\mikel\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net5.0"
+          "net48"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net50": {
-            "projectReferences": {}
+          "net48": {
+            "targetAlias": "net48",
+            "projectReferences": {
+              "C:\\SpaceInvaders\\MainApp\\Tachanka\\TachankaObj.csproj": {
+                "projectPath": "C:\\SpaceInvaders\\MainApp\\Tachanka\\TachankaObj.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -36,14 +41,25 @@
         }
       },
       "frameworks": {
-        "net50": {
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
+        "net48": {
+          "targetAlias": "net48",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100-preview.8.20417.9\\RuntimeIdentifierGraph.json"
         }
       },
       "runtimes": {
         "win7-x86": {
           "#import": []
         }
+      }
+    },
+    "C:\\SpaceInvaders\\MainApp\\Tachanka\\TachankaObj.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\SpaceInvaders\\MainApp\\Tachanka\\TachankaObj.csproj",
+        "projectName": "TachankaObj",
+        "projectPath": "C:\\SpaceInvaders\\MainApp\\Tachanka\\TachankaObj.csproj"
+      },
+      "frameworks": {
+        "net48": {}
       }
     }
   }

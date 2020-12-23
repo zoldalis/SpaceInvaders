@@ -4,3 +4,4 @@ C:\SpaceInvaders\MainApp\Tachanka\obj\Debug\TachankaObj.csprojAssemblyReference.
 C:\SpaceInvaders\MainApp\Tachanka\obj\Debug\TachankaObj.csproj.CoreCompileInputs.cache
 C:\SpaceInvaders\MainApp\Tachanka\obj\Debug\Tachanka.dll
 C:\SpaceInvaders\MainApp\Tachanka\obj\Debug\Tachanka.pdb
+C:\SpaceInvaders\MainApp\Tachanka\bin\Debug\Tachanka.tlb

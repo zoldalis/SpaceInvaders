@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Runtime.InteropServices;
 using ShellObj;
-
+using System.Reflection;
 
 namespace TachankaObj
 {
@@ -45,6 +45,11 @@ namespace TachankaObj
     [Guid("91abff50-0361-4681-bf72-f3ec51a1570b"), ClassInterface(ClassInterfaceType.None), ComSourceInterfaces(typeof(IMyEvents))]
     public class Tachanka : Itachanka
     {
+        string bodyline1 = "   ##   ";
+        string bodyline2 = "   ##   ";
+        string bodyline3 = "########";
+        string bodyline4 = "########";
+        int timerinf = 0;
         public  Mutex tmut = new Mutex();
         public delegate void MoveHandler(ConsoleKeyInfo key, Tachanka obj);
         public event MoveHandler keywaspressed;
@@ -83,9 +88,12 @@ namespace TachankaObj
             try
             {
                 TransportTank(topleft.x - 1, topleft.y);
+                
             }
             catch (Exception)
             {
+                topleft.x = Console.BufferWidth - 9;
+                MoveLeft();
                 return;
             }
             
@@ -94,10 +102,19 @@ namespace TachankaObj
         {
             try
             {
-                TransportTank(topleft.x + 1, topleft.y);
+                if (topleft.x + 10 > Console.BufferWidth)
+                {
+                    Erase();
+                    topleft.x = -1;
+                    MoveRight();
+                }
+                else
+                    TransportTank(topleft.x + 1, topleft.y);
+                
             }
             catch (Exception)
             {
+                topleft.x = 0;
                 return;
             }
             
@@ -105,23 +122,23 @@ namespace TachankaObj
 
         public void Shoot()
         {
-            int timerinf = 1;
             TimerCallback tm;
             Timer timer;
             if (timerinf == 0)
             {
                 Shell shell = new Shell(topleft.x + 3);
                 timerinf = 1;
-                tm = new TimerCallback(Count);
-                timer = new Timer(tm, timerinf, 1000, 1000000);
             }
+            tm = new TimerCallback(Count);
+            timer = new Timer(tm, timerinf, 1000, 1000);
 
         }
 
         public static void Count(object obj)
         {
             int x = (int)obj;
-            x = 1;
+            x = 0;
+            Thread.CurrentThread.Abort();
         }
 
         public void CheckKeyEvent()
@@ -150,20 +167,45 @@ namespace TachankaObj
             try
             {
                 IndexingCoords();
-                for (int i = 0; i < 20; i++)
+                if (item == ' ')
                 {
-                    Console.SetCursorPosition(bodycoords[i, 0], bodycoords[i, 1]);
-                    Console.Write(item);
+                    for (int i = 0; i < 20; i++)
+                    {
+                        Console.SetCursorPosition(bodycoords[i, 0], bodycoords[i, 1]);
+                        Console.Write(item);
+                    }
+                }
+                else
+                {
+                    Console.SetCursorPosition(topleft.x, topleft.y);
+                    Console.Write(bodyline1);
+                    Console.SetCursorPosition(topleft.x, topleft.y + 1);
+                    Console.Write(bodyline2);
+                    Console.SetCursorPosition(topleft.x, topleft.y + 2);
+                    Console.Write(bodyline3);
+                    Console.SetCursorPosition(topleft.x, topleft.y + 3);
+                    Console.Write(bodyline4);
                 }
             }
             catch (Exception)
             {
+                if (topleft.x < 0)
+                {
+                    topleft.x = Console.BufferWidth - 8;
+                    PrintBody(item);
+                }
+                else
+                {
+                    topleft.x = 0;
+                    PrintBody(item);
+                }
                 return;
             }
         }
 
         public void IndexingCoords()
         {
+            
             bodycoords[0, 0] = topleft.x + 3;
             bodycoords[0, 1] = topleft.y;
             bodycoords[1, 0] = bodycoords[0, 0] + 1;

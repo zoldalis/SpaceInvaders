@@ -62,9 +62,7 @@ namespace ShellObj
             try
             {
                 Console.SetCursorPosition(coos.x, coos.y);
-                Console.Write('/');
-                Console.SetCursorPosition(coos.x + 1, coos.y);
-                Console.Write('\\');
+                Console.Write("/\\");
             }
             catch (Exception)
             {

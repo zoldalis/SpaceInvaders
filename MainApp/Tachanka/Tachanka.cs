@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Runtime.InteropServices;
+using ShellObj;
 
 
 namespace TachankaObj
@@ -14,40 +15,50 @@ namespace TachankaObj
     InterfaceType(ComInterfaceType.InterfaceIsIDispatch)]
     public interface IMyEvents
     {
+        //delegate void MoveHandler(ConsoleKeyInfo key, Tachanka obj);
+        event EventHandler keywaspressed;
     }
 
 
     [Guid("ad3a48b6-0e4d-45dd-90c0-c5343173c041")]
     interface Itachanka
     {
-        
+        [DispId(1)]
         void SetBodyXY(int x, int y);
+        [DispId(2)]
         void MoveLeft();
+        [DispId(3)]
         void MoveRight();
+        [DispId(4)]
+        void CheckKeyEvent();
+        [DispId(5)]
         void TransportTank(int x, int y);
+        [DispId(6)]
         void Erase();
+        [DispId(7)]
         void PrintBody(char item);
+        [DispId(8)]
         void IndexingCoords();
+
     }
 
     [Guid("91abff50-0361-4681-bf72-f3ec51a1570b"), ClassInterface(ClassInterfaceType.None), ComSourceInterfaces(typeof(IMyEvents))]
-    public class Tachanka 
+    public class Tachanka : Itachanka
     {
-        public static Mutex tmut = new Mutex();
-
-        public delegate void MoveHandler(ConsoleKeyInfo key);
-        static public event MoveHandler keywaspressed;
-        static private int[,] bodycoords = new int[20, 2];
+        public  Mutex tmut = new Mutex();
+        public delegate void MoveHandler(ConsoleKeyInfo key, Tachanka obj);
+        public event MoveHandler keywaspressed;
+        private int[,] bodycoords = new int[20, 2];
         public struct Topleft
         {
             public int x;
             public int y;
         }
-        static Topleft topleft;
+        Topleft topleft;
         //private int[] topleft = new int[2];
         const int CURR_KEY_ID = 1;
-        public static ThreadStart st1 = new ThreadStart(CheckKeyEvent);
-        public static Thread keythread = new Thread(st1);
+        public  ThreadStart st1;
+        public  Thread keythread;
         
         public Tachanka()
         {
@@ -56,58 +67,102 @@ namespace TachankaObj
             IndexingCoords();
 
             PrintBody('#');
+            st1 = new ThreadStart(CheckKeyEvent);
+            keythread = new Thread(st1);
             keythread.Start();
-
+            keywaspressed += Tachanka_keywaspressed;
 
         }
-        static public void SetBodyXY(int x, int y)
+       public void SetBodyXY(int x, int y)
         {
             topleft.x = x;
             topleft.y = y;
         }
-        static public void MoveLeft()
+        public void MoveLeft()
         {
-            //topleft.x -= 1;
-            TransportTank(topleft.x-1,topleft.y);
+            try
+            {
+                TransportTank(topleft.x - 1, topleft.y);
+            }
+            catch (Exception)
+            {
+                return;
+            }
+            
         }
-        static public void MoveRight()
+        public void MoveRight()
         {
-            //topleft.x += 1;
-            TransportTank(topleft.x+1, topleft.y);
+            try
+            {
+                TransportTank(topleft.x + 1, topleft.y);
+            }
+            catch (Exception)
+            {
+                return;
+            }
+            
         }
 
-        static public void CheckKeyEvent()
+        public void Shoot()
+        {
+            int timerinf = 1;
+            TimerCallback tm;
+            Timer timer;
+            if (timerinf == 0)
+            {
+                Shell shell = new Shell(topleft.x + 3);
+                timerinf = 1;
+                tm = new TimerCallback(Count);
+                timer = new Timer(tm, timerinf, 1000, 1000000);
+            }
+
+        }
+
+        public static void Count(object obj)
+        {
+            int x = (int)obj;
+            x = 1;
+        }
+
+        public void CheckKeyEvent()
         {
             while (true)
             {
                 tmut.WaitOne();
                 ConsoleKeyInfo kk = Console.ReadKey();
                 tmut.ReleaseMutex();
-                keywaspressed?.Invoke(kk);
-                Thread.Sleep(10);
+                keywaspressed?.Invoke(kk,this);
+                Thread.Sleep(5);
             }
         }
-        static public void TransportTank(int x,int y)
+        public void TransportTank(int x,int y)
         {
             Erase();
             SetBodyXY(x,y);
             PrintBody('#');
         }
-        static public void Erase()
+        public void Erase()
         {
             PrintBody(' ');
         }
-        static public void PrintBody(char item)
+        public void PrintBody(char item)
         {
-            IndexingCoords();
-            for (int i = 0; i < 20; i++)
+            try
             {
-                Console.SetCursorPosition(bodycoords[i,0], bodycoords[i,1]);
-                Console.Write(item);
+                IndexingCoords();
+                for (int i = 0; i < 20; i++)
+                {
+                    Console.SetCursorPosition(bodycoords[i, 0], bodycoords[i, 1]);
+                    Console.Write(item);
+                }
+            }
+            catch (Exception)
+            {
+                return;
             }
         }
 
-        static public void IndexingCoords()
+        public void IndexingCoords()
         {
             bodycoords[0, 0] = topleft.x + 3;
             bodycoords[0, 1] = topleft.y;
@@ -167,6 +222,26 @@ namespace TachankaObj
 
             bodycoords[19, 0] = topleft.x + 7;
             bodycoords[19, 1] = topleft.y + 3;
+        }
+
+        private static void Tachanka_keywaspressed(ConsoleKeyInfo key, Tachanka obj)
+        {
+            obj.tmut.WaitOne();
+            if (key.Key == ConsoleKey.LeftArrow)
+            {
+                obj.MoveLeft();
+            }
+            if (key.Key == ConsoleKey.RightArrow)
+            {
+                obj.MoveRight();
+            }
+            if (key.Key == ConsoleKey.UpArrow)
+            {
+                obj.Shoot();
+            }
+            bool h = obj.keythread.IsAlive;
+            obj.tmut.ReleaseMutex();
+            h = obj.keythread.IsAlive;
         }
     }
 }

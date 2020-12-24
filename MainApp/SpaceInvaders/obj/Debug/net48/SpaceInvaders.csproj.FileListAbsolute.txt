@@ -10,3 +10,5 @@ C:\SpaceInvaders\MainApp\SpaceInvaders\obj\Debug\net48\SpaceInvaders.pdb
 C:\SpaceInvaders\MainApp\SpaceInvaders\bin\Debug\net48\Tachanka.dll
 C:\SpaceInvaders\MainApp\SpaceInvaders\bin\Debug\net48\Tachanka.pdb
 C:\SpaceInvaders\MainApp\SpaceInvaders\obj\Debug\net48\SpaceInvaders.csproj.CopyComplete
+C:\SpaceInvaders\MainApp\SpaceInvaders\bin\Debug\net48\Shell.dll
+C:\SpaceInvaders\MainApp\SpaceInvaders\bin\Debug\net48\Shell.pdb

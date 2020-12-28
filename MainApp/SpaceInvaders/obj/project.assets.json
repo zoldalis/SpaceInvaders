@@ -1,70 +1,12 @@
 {
   "version": 3,
   "targets": {
-    ".NETFramework,Version=v4.8": {
-      "ShellObj/1.0.0": {
-        "type": "project",
-        "compile": {
-          "bin/placeholder/ShellObj.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/ShellObj.dll": {}
-        }
-      },
-      "TachankaObj/1.0.0": {
-        "type": "project",
-        "dependencies": {
-          "ShellObj": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/TachankaObj.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/TachankaObj.dll": {}
-        }
-      }
-    },
-    ".NETFramework,Version=v4.8/win7-x86": {
-      "ShellObj/1.0.0": {
-        "type": "project",
-        "compile": {
-          "bin/placeholder/ShellObj.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/ShellObj.dll": {}
-        }
-      },
-      "TachankaObj/1.0.0": {
-        "type": "project",
-        "dependencies": {
-          "ShellObj": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/TachankaObj.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/TachankaObj.dll": {}
-        }
-      }
-    }
+    ".NETFramework,Version=v4.8": {},
+    ".NETFramework,Version=v4.8/win7-x86": {}
   },
-  "libraries": {
-    "ShellObj/1.0.0": {
-      "type": "project",
-      "path": "../Shell/ShellObj.csproj",
-      "msbuildProject": "../Shell/ShellObj.csproj"
-    },
-    "TachankaObj/1.0.0": {
-      "type": "project",
-      "path": "../Tachanka/TachankaObj.csproj",
-      "msbuildProject": "../Tachanka/TachankaObj.csproj"
-    }
-  },
+  "libraries": {},
   "projectFileDependencyGroups": {
-    ".NETFramework,Version=v4.8": [
-      "ShellObj >= 1.0.0",
-      "TachankaObj >= 1.0.0"
-    ]
+    ".NETFramework,Version=v4.8": []
   },
   "packageFolders": {
     "C:\\Users\\mikel\\.nuget\\packages\\": {}
@@ -92,14 +34,7 @@
       "frameworks": {
         "net48": {
           "targetAlias": "net48",
-          "projectReferences": {
-            "C:\\SpaceInvaders\\MainApp\\Shell\\ShellObj.csproj": {
-              "projectPath": "C:\\SpaceInvaders\\MainApp\\Shell\\ShellObj.csproj"
-            },
-            "C:\\SpaceInvaders\\MainApp\\Tachanka\\TachankaObj.csproj": {
-              "projectPath": "C:\\SpaceInvaders\\MainApp\\Tachanka\\TachankaObj.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {

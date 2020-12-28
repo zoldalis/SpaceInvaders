@@ -54,11 +54,5 @@
   <ItemGroup>
     <None Include="TachankaLib.snk" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Shell\ShellObj.csproj">
-      <Project>{e73e99b1-0ccb-4dfd-9b9a-970c15d91f74}</Project>
-      <Name>ShellObj</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

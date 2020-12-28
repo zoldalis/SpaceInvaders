@@ -1,0 +1,6 @@
+C:\SpaceInvaders\MainApp\Shell\bin\Release\Shell.dll
+C:\SpaceInvaders\MainApp\Shell\bin\Release\Shell.pdb
+C:\SpaceInvaders\MainApp\Shell\obj\Release\ShellObj.csprojAssemblyReference.cache
+C:\SpaceInvaders\MainApp\Shell\obj\Release\ShellObj.csproj.CoreCompileInputs.cache
+C:\SpaceInvaders\MainApp\Shell\obj\Release\Shell.dll
+C:\SpaceInvaders\MainApp\Shell\obj\Release\Shell.pdb

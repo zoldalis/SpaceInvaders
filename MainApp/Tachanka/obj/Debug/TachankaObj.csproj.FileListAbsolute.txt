@@ -1,10 +1,6 @@
 C:\SpaceInvaders\MainApp\Tachanka\bin\Debug\Tachanka.dll
 C:\SpaceInvaders\MainApp\Tachanka\bin\Debug\Tachanka.pdb
-C:\SpaceInvaders\MainApp\Tachanka\obj\Debug\TachankaObj.csprojAssemblyReference.cache
 C:\SpaceInvaders\MainApp\Tachanka\obj\Debug\TachankaObj.csproj.CoreCompileInputs.cache
 C:\SpaceInvaders\MainApp\Tachanka\obj\Debug\Tachanka.dll
 C:\SpaceInvaders\MainApp\Tachanka\obj\Debug\Tachanka.pdb
 C:\SpaceInvaders\MainApp\Tachanka\bin\Debug\Tachanka.tlb
-C:\SpaceInvaders\MainApp\Tachanka\bin\Debug\Shell.dll
-C:\SpaceInvaders\MainApp\Tachanka\bin\Debug\Shell.pdb
-C:\SpaceInvaders\MainApp\Tachanka\obj\Debug\TachankaObj.csproj.CopyComplete

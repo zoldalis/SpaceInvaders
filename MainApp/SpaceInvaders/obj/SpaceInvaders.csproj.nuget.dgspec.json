@@ -4,16 +4,6 @@
     "C:\\SpaceInvaders\\MainApp\\SpaceInvaders\\SpaceInvaders.csproj": {}
   },
   "projects": {
-    "C:\\SpaceInvaders\\MainApp\\Shell\\ShellObj.csproj": {
-      "restore": {
-        "projectUniqueName": "C:\\SpaceInvaders\\MainApp\\Shell\\ShellObj.csproj",
-        "projectName": "ShellObj",
-        "projectPath": "C:\\SpaceInvaders\\MainApp\\Shell\\ShellObj.csproj"
-      },
-      "frameworks": {
-        "net48": {}
-      }
-    },
     "C:\\SpaceInvaders\\MainApp\\SpaceInvaders\\SpaceInvaders.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -37,14 +27,7 @@
         "frameworks": {
           "net48": {
             "targetAlias": "net48",
-            "projectReferences": {
-              "C:\\SpaceInvaders\\MainApp\\Shell\\ShellObj.csproj": {
-                "projectPath": "C:\\SpaceInvaders\\MainApp\\Shell\\ShellObj.csproj"
-              },
-              "C:\\SpaceInvaders\\MainApp\\Tachanka\\TachankaObj.csproj": {
-                "projectPath": "C:\\SpaceInvaders\\MainApp\\Tachanka\\TachankaObj.csproj"
-              }
-            }
+            "projectReferences": {}
           }
         },
         "warningProperties": {
@@ -63,25 +46,6 @@
         "win7-x86": {
           "#import": []
         }
-      }
-    },
-    "C:\\SpaceInvaders\\MainApp\\Tachanka\\TachankaObj.csproj": {
-      "restore": {
-        "projectUniqueName": "C:\\SpaceInvaders\\MainApp\\Tachanka\\TachankaObj.csproj",
-        "projectName": "TachankaObj",
-        "projectPath": "C:\\SpaceInvaders\\MainApp\\Tachanka\\TachankaObj.csproj",
-        "frameworks": {
-          "net48": {
-            "projectReferences": {
-              "C:\\SpaceInvaders\\MainApp\\Shell\\ShellObj.csproj": {
-                "projectPath": "C:\\SpaceInvaders\\MainApp\\Shell\\ShellObj.csproj"
-              }
-            }
-          }
-        }
-      },
-      "frameworks": {
-        "net48": {}
       }
     }
   }

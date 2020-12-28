@@ -1,0 +1,6 @@
+C:\SpaceInvaders\MainApp\PlaneObj\bin\Release\PlaneObj.dll
+C:\SpaceInvaders\MainApp\PlaneObj\bin\Release\PlaneObj.pdb
+C:\SpaceInvaders\MainApp\PlaneObj\obj\Release\PlaneObj.csprojAssemblyReference.cache
+C:\SpaceInvaders\MainApp\PlaneObj\obj\Release\PlaneObj.csproj.CoreCompileInputs.cache
+C:\SpaceInvaders\MainApp\PlaneObj\obj\Release\PlaneObj.dll
+C:\SpaceInvaders\MainApp\PlaneObj\obj\Release\PlaneObj.pdb

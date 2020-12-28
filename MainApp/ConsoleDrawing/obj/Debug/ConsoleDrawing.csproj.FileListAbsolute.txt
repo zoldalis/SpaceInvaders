@@ -1,0 +1,5 @@
+C:\SpaceInvaders\MainApp\ConsoleDrawing\bin\Debug\ConsoleDrawing.dll
+C:\SpaceInvaders\MainApp\ConsoleDrawing\bin\Debug\ConsoleDrawing.pdb
+C:\SpaceInvaders\MainApp\ConsoleDrawing\obj\Debug\ConsoleDrawing.csproj.CoreCompileInputs.cache
+C:\SpaceInvaders\MainApp\ConsoleDrawing\obj\Debug\ConsoleDrawing.dll
+C:\SpaceInvaders\MainApp\ConsoleDrawing\obj\Debug\ConsoleDrawing.pdb

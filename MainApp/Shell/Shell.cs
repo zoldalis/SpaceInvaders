@@ -59,14 +59,15 @@ namespace ShellObj
         {
             while (true)
             {
-                if (shellthread.IsAlive == false)
-                    break;
+                if (coos.y < 1)
+                    Erase();
                 Console.CursorVisible = false;
-                Erase();
-                coos.y -= 1;
+                //Erase();
+                //coos.y -= 1;
                 if (coos.y < 1)
                     break;
-                PrintBody();
+                Console.MoveBufferArea(coos.x, coos.y, 2, 1, coos.x , coos.y-1);
+                coos.y--;
                 Thread.Sleep(20);
             }
             

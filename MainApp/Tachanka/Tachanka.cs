@@ -48,6 +48,7 @@ namespace TachankaObj
         string bodyline2 = "   ##   ";
         string bodyline3 = "########";
         string bodyline4 = "########";
+
         int timerinf = 0;
         public  Mutex tmut = new Mutex();
         public delegate void MoveHandler(ConsoleKeyInfo key, Tachanka obj);
@@ -68,11 +69,20 @@ namespace TachankaObj
             SetBodyXY(Console.BufferWidth / 2, Console.BufferHeight - 4);
 
 
-            PrintBody('#');
+            //PrintBody('#');
             st1 = new ThreadStart(CheckKeyEvent);
             keythread = new Thread(st1);
             keythread.Start();
             keywaspressed += Tachanka_keywaspressed;
+
+            Console.SetCursorPosition(topleft.x, topleft.y);
+            Console.Write(bodyline1);
+            Console.SetCursorPosition(topleft.x, topleft.y + 1);
+            Console.Write(bodyline2);
+            Console.SetCursorPosition(topleft.x, topleft.y + 2);
+            Console.Write(bodyline3);
+            Console.SetCursorPosition(topleft.x, topleft.y + 3);
+            Console.Write(bodyline4);
 
         }
        public void SetBodyXY(int x, int y)
@@ -82,18 +92,16 @@ namespace TachankaObj
         }
         public void MoveLeft()
         {
-            try
+            if(topleft.x == 0)
             {
-                TransportTank(topleft.x - 1, topleft.y);
-                
+                Console.MoveBufferArea(topleft.x, topleft.y, 8, 4, Console.BufferWidth-8, topleft.y);
+                topleft.x = Console.BufferWidth - 8;
             }
-            catch (Exception)
+            else
             {
-                topleft.x = Console.BufferWidth - 9;
-                MoveLeft();
-                return;
-            }
-            
+                Console.MoveBufferArea(topleft.x, topleft.y, 8, 4, topleft.x - 1, topleft.y);
+                topleft.x--;
+            }  
         }
         public void MoveRight()
         {
@@ -101,13 +109,15 @@ namespace TachankaObj
             {
                 if (topleft.x + 10 > Console.BufferWidth)
                 {
-                    Erase();
-                    topleft.x = -1;
-                    MoveRight();
+                    Console.MoveBufferArea(topleft.x, topleft.y, 8, 4, 0, topleft.y);
+                    topleft.x = 0;
                 }
                 else
-                    TransportTank(topleft.x + 1, topleft.y);
-                
+                {
+                    Console.MoveBufferArea(topleft.x, topleft.y, 8, 4, topleft.x + 1, topleft.y);
+                    topleft.x++;
+                }
+
             }
             catch (Exception)
             {
@@ -150,7 +160,7 @@ namespace TachankaObj
                 ConsoleKeyInfo kk = Console.ReadKey();
                 tmut.ReleaseMutex();
                 keywaspressed?.Invoke(kk,this);
-                Thread.Sleep(5);
+                Thread.Sleep(1);
             }
         }
         public void TransportTank(int x,int y)
@@ -171,15 +181,15 @@ namespace TachankaObj
         {
             try
             {
-                    
-                    Console.SetCursorPosition(topleft.x, topleft.y);
-                    Console.Write(bodyline1);
-                    Console.SetCursorPosition(topleft.x, topleft.y + 1);
-                    Console.Write(bodyline2);
-                    Console.SetCursorPosition(topleft.x, topleft.y + 2);
-                    Console.Write(bodyline3);
-                    Console.SetCursorPosition(topleft.x, topleft.y + 3);
-                    Console.Write(bodyline4);
+                
+                    //Console.SetCursorPosition(topleft.x, topleft.y);
+                    //Console.Write(bodyline1);
+                    //Console.SetCursorPosition(topleft.x, topleft.y + 1);
+                    //Console.Write(bodyline2);
+                    //Console.SetCursorPosition(topleft.x, topleft.y + 2);
+                    //Console.Write(bodyline3);
+                    //Console.SetCursorPosition(topleft.x, topleft.y + 3);
+                    //Console.Write(bodyline4);
             }
             catch (Exception)
             {

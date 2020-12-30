@@ -31,7 +31,10 @@ namespace SpaceInvaders
                 ?? throw new ArgumentException($"не удалось загрузить ActiveX object c ProgId PlaneObj");
             dynamic plane = Activator.CreateInstance(activeXLibType1);
 
+            //char[,] con = new ;
+            
 
+            
 
             //var ob1 = Type.GetTypeFromProgID(ProgId2)
             //    ?? throw new ArgumentException($"не удалось загрузить ActiveX object c ProgId {ProgId2}");

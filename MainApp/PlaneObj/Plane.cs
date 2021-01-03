@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using System.Drawing.Drawing2D;
-using System.Windows.Forms;
+using System.Timers;
 
 namespace PlaneObj
 {
@@ -20,10 +20,15 @@ namespace PlaneObj
     [ComVisible(true)]
     public class Plane
     {
-        public delegate void HitHandler(ConsoleKeyInfo key, Plane obj);
-        public event HitHandler keywaspressed;
+        static Type activeXLibType = Type.GetTypeFromProgID("ConsoleDrawing");
+        dynamic CD = Activator.CreateInstance(activeXLibType);
+        private string direction = "left";
+        private Timer dirTimer;
+        private Timer moveTimer;
+        private Timer checkTimer;
+        //public delegate void HitHandler(ConsoleKeyInfo key, Plane obj);
+        //public event HitHandler TargetWasHit;
 
-        int[,] coords = new int[3, 2];
         public struct Topleft
         {
             public int x;
@@ -35,28 +40,100 @@ namespace PlaneObj
             Random rand = new Random();
             topleft.x = rand.Next(0,Console.BufferWidth - 9);
             topleft.y = 1;
-            IndexCoords();
-            var activeXLibType = Type.GetTypeFromProgID("ConsoleDrawing")
-                ?? throw new ArgumentException("не удалось загрузить ActiveX object c ProgId ConsoleDrawing");
-            dynamic CD = Activator.CreateInstance(activeXLibType);
-            CD.PrintPlane(coords);
-            CD.ErasePlane(topleft.x,topleft.y);
+
+
+            //Type activeXLibType = Type.GetTypeFromProgID("ConsoleDrawing")
+               // ?? throw new ArgumentException("не удалось загрузить ActiveX object c ProgId ConsoleDrawing");
+            //dynamic CD = Activator.CreateInstance(activeXLibType);
+            CD.PrintPlane(topleft.x,topleft.y);
+            //CD.ErasePlane(topleft.x,topleft.y);
+            InitDirTimer();
+            InitMoveTimer();
+            InitCheckTimer();
+
+
         }
-        public void IndexCoords()
+
+        public bool IsIntact()
         {
-            coords[0, 0] = topleft.x;
-            coords[0, 1] = topleft.y;
-            coords[1, 0] = topleft.x;
-            coords[1, 1] = topleft.y + 1;
-            coords[2, 0] = topleft.x;
-            coords[2, 1] = topleft.y + 2;
+            string line = CD.ReadString((short)topleft.x, (short)topleft.y,13);
+            if (line.Contains("/\\"))
+                return false;
+            else
+                return true;
         }
-        public void CheckCondition()
+        void checkCondition(Object source, ElapsedEventArgs e)
         {
-            for(int j = 0; j < 13; j++)
+            if (IsIntact() == false)
             {
-                //if()
+                dirTimer.Dispose();
+                moveTimer.Dispose();
+                checkTimer.Dispose();
+                CD.ErasePlane(topleft.x, topleft.y);
             }
+        }
+        void moving(Object source, ElapsedEventArgs e)
+        {
+            if (IsIntact() == false)
+            {
+                dirTimer.Dispose();
+                moveTimer.Dispose();
+                checkTimer.Dispose();
+                CD.ErasePlane(topleft.x, topleft.y);
+            }
+            else
+                CD.PlaneMove(ref direction, ref topleft.x,ref topleft.y);
+        }
+        void cngdirection(Object source, ElapsedEventArgs e)
+        {
+            string j = "down";
+            if (topleft.y + 6 < Console.BufferHeight)
+            {
+                CD.PlaneMove(ref j, ref topleft.x, ref topleft.y);
+            }
+            else
+            {
+                dirTimer.Dispose();
+                moveTimer.Dispose();
+                checkTimer.Dispose();
+                Console.Clear();
+                Console.SetCursorPosition(Console.BufferWidth/2-5, Console.BufferHeight/2);
+                Console.Write("            " + "GAME OVER");
+            }
+            Random rnd = new Random();
+            int val = rnd.Next(0,2);
+            if (val == 1)
+            {
+                direction = "right";
+                return;
+            }
+            else
+            {
+                direction = "left";
+                return;
+            }
+        }
+        void InitDirTimer()
+        {
+            dirTimer = new Timer(913);
+            dirTimer.Elapsed += cngdirection;
+            dirTimer.AutoReset = true;
+            dirTimer.Enabled = true;
+            
+        }
+        void InitMoveTimer()
+        {
+            moveTimer = new Timer(200);
+            moveTimer.Elapsed += moving;
+            moveTimer.AutoReset = true;
+            moveTimer.Enabled = true;
+        }
+        void InitCheckTimer()
+        {
+            checkTimer = new Timer(25);
+            checkTimer.Elapsed += checkCondition;
+            checkTimer.AutoReset = true;
+            checkTimer.Enabled = true;
         }
     }
 

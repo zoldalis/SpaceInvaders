@@ -12,7 +12,7 @@ namespace ConsoleDrawing
     interface IPrinting
     {
         [DispId(1)]
-        void PrintPlane(int[,] coords);
+        void PrintPlane(int x, int y);
         [DispId(2)]
         void ErasePlane(int x, int y);
     }
@@ -37,12 +37,64 @@ namespace ConsoleDrawing
                 Console.Write("             ");
             }
         }
-        public void PrintPlane(int[,] coords)
+        public void PrintPlane(int x,int y)
         {
             for(int i = 0; i < 3; i++)
             {
-                Console.SetCursorPosition(coords[i,0],coords[i,1]);
+                Console.SetCursorPosition(x,y + i);
                 Console.Write(PlaneBody[i]);
+            }
+        }
+        public string ReadString(short x,short y,short width)
+        {
+            string output = "";
+            foreach (string line in ConsoleReader.ReadFromBuffer(x, y, width, 3))
+            {
+                if (line.Contains("/\\"))
+                    output =  line;
+            }
+            return output;
+        }
+        public void PlaneMove(ref string direction,ref int x, ref int y)
+        {
+            if (direction == "right")
+            {
+                if (x + 2 < Console.BufferWidth - 14)
+                {
+                    Console.MoveBufferArea(x, y, 13, 3, x + 2, y);
+                    x += 2;
+                }
+                else
+                {
+                    direction = "left";
+                    PlaneMove(ref direction, ref x, ref y);
+                }
+            }
+            
+            if (direction == "left")
+            {
+                if (x - 2 > 0)
+                {
+                    Console.MoveBufferArea(x, y, 13, 3, x - 2, y);
+                    x -= 2;
+                }
+                else
+                {
+                    direction = "right";
+                    PlaneMove(ref direction, ref x, ref y);
+                }
+            }
+            if (direction == "down")
+            {
+                if (y + 6 < Console.BufferHeight)
+                {
+                    Console.MoveBufferArea(x, y, 13, 3, x, y + 1);
+                    y += 1;
+                }
+                else
+                {
+                    ErasePlane(x,y);
+                }
             }
         }
     }

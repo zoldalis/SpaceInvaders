@@ -1,7 +1,7 @@
 C:\SpaceInvaders\MainApp\PlaneObj\bin\Debug\PlaneObj.dll
 C:\SpaceInvaders\MainApp\PlaneObj\bin\Debug\PlaneObj.pdb
-C:\SpaceInvaders\MainApp\PlaneObj\obj\Debug\PlaneObj.csprojAssemblyReference.cache
 C:\SpaceInvaders\MainApp\PlaneObj\obj\Debug\PlaneObj.csproj.CoreCompileInputs.cache
 C:\SpaceInvaders\MainApp\PlaneObj\obj\Debug\PlaneObj.dll
 C:\SpaceInvaders\MainApp\PlaneObj\obj\Debug\PlaneObj.pdb
 C:\SpaceInvaders\MainApp\PlaneObj\bin\Debug\PlaneObj.tlb
+C:\SpaceInvaders\MainApp\PlaneObj\obj\Debug\PlaneObj.csprojAssemblyReference.cache

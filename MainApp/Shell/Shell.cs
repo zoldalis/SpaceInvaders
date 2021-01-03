@@ -59,15 +59,15 @@ namespace ShellObj
         {
             while (true)
             {
-                if (coos.y < 1)
+                if (coos.y < 2)
                     Erase();
                 Console.CursorVisible = false;
                 //Erase();
                 //coos.y -= 1;
-                if (coos.y < 1)
+                if (coos.y < 2)
                     break;
-                Console.MoveBufferArea(coos.x, coos.y, 2, 1, coos.x , coos.y-1);
-                coos.y--;
+                Console.MoveBufferArea(coos.x, coos.y, 2, 1, coos.x , coos.y-2);
+                coos.y-= 2;
                 Thread.Sleep(20);
             }
             

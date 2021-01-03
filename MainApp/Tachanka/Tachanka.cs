@@ -99,8 +99,8 @@ namespace TachankaObj
             }
             else
             {
-                Console.MoveBufferArea(topleft.x, topleft.y, 8, 4, topleft.x - 1, topleft.y);
-                topleft.x--;
+                Console.MoveBufferArea(topleft.x, topleft.y, 8, 4, topleft.x - 2, topleft.y);
+                topleft.x-=2;
             }  
         }
         public void MoveRight()
@@ -114,8 +114,8 @@ namespace TachankaObj
                 }
                 else
                 {
-                    Console.MoveBufferArea(topleft.x, topleft.y, 8, 4, topleft.x + 1, topleft.y);
-                    topleft.x++;
+                    Console.MoveBufferArea(topleft.x, topleft.y, 8, 4, topleft.x + 2, topleft.y);
+                    topleft.x+=2;
                 }
 
             }

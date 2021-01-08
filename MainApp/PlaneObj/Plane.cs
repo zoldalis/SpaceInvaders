@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using System.Drawing.Drawing2D;
 using System.Timers;
@@ -20,12 +19,18 @@ namespace PlaneObj
     [ComVisible(true)]
     public class Plane
     {
+        public System.Threading.Mutex tmut = new System.Threading.Mutex();
         static Type activeXLibType = Type.GetTypeFromProgID("ConsoleDrawing");
         dynamic CD = Activator.CreateInstance(activeXLibType);
         private string direction = "left";
         private Timer dirTimer;
         private Timer moveTimer;
         private Timer checkTimer;
+        private Timer godowntmr;
+
+        public System.Threading.ThreadStart st1;
+        public System.Threading.Thread keythread;
+
         //public delegate void HitHandler(ConsoleKeyInfo key, Plane obj);
         //public event HitHandler TargetWasHit;
 
@@ -50,6 +55,7 @@ namespace PlaneObj
             InitDirTimer();
             InitMoveTimer();
             InitCheckTimer();
+            InitGoDownTimer();
 
 
         }
@@ -66,42 +72,26 @@ namespace PlaneObj
         {
             if (IsIntact() == false)
             {
-                dirTimer.Dispose();
-                moveTimer.Dispose();
-                checkTimer.Dispose();
+                DestuctPlane();
                 CD.ErasePlane(topleft.x, topleft.y);
             }
         }
         void moving(Object source, ElapsedEventArgs e)
         {
+            tmut.WaitOne();
             if (IsIntact() == false)
             {
-                dirTimer.Dispose();
-                moveTimer.Dispose();
-                checkTimer.Dispose();
+                DestuctPlane();
                 CD.ErasePlane(topleft.x, topleft.y);
             }
             else
                 CD.PlaneMove(ref direction, ref topleft.x,ref topleft.y);
+            tmut.ReleaseMutex();
         }
         void cngdirection(Object source, ElapsedEventArgs e)
         {
-            string j = "down";
-            if (topleft.y + 6 < Console.BufferHeight)
-            {
-                CD.PlaneMove(ref j, ref topleft.x, ref topleft.y);
-            }
-            else
-            {
-                dirTimer.Dispose();
-                moveTimer.Dispose();
-                checkTimer.Dispose();
-                Console.Clear();
-                Console.SetCursorPosition(Console.BufferWidth/2-5, Console.BufferHeight/2);
-                Console.Write("            " + "GAME OVER");
-            }
             Random rnd = new Random();
-            int val = rnd.Next(0,2);
+            int val = rnd.Next(0,3);
             if (val == 1)
             {
                 direction = "right";
@@ -113,9 +103,28 @@ namespace PlaneObj
                 return;
             }
         }
+        void GoDown(Object source, ElapsedEventArgs e)
+        {
+            tmut.WaitOne();
+            string j = "down";
+            if (topleft.y + 6 < Console.BufferHeight)
+            { 
+                CD.PlaneMove(ref j, ref topleft.x, ref topleft.y);
+                
+            }
+            else
+            {
+                DestuctPlane();
+                CD.ErasePlane(topleft.x, topleft.y);
+                Console.Clear();
+                Console.SetCursorPosition(Console.BufferWidth / 2 - 5, Console.BufferHeight / 2);
+                Console.Write("            " + "GAME OVER");
+            }
+            tmut.ReleaseMutex();
+        }
         void InitDirTimer()
         {
-            dirTimer = new Timer(913);
+            dirTimer = new Timer(2531);
             dirTimer.Elapsed += cngdirection;
             dirTimer.AutoReset = true;
             dirTimer.Enabled = true;
@@ -135,6 +144,21 @@ namespace PlaneObj
             checkTimer.AutoReset = true;
             checkTimer.Enabled = true;
         }
+        void InitGoDownTimer()
+        {
+            godowntmr = new Timer(931);
+            godowntmr.Elapsed += GoDown;
+            godowntmr.AutoReset = true;
+            godowntmr.Enabled = true;
+        }
+        void DestuctPlane()
+        {
+            dirTimer.Dispose();
+            moveTimer.Dispose();
+            checkTimer.Dispose();
+            godowntmr.Dispose();
+        }
+
     }
 
 }

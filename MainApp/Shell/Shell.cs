@@ -34,6 +34,7 @@ namespace ShellObj
     [ComVisible(true)]
     public class Shell : IShell
     {
+        public Mutex tmut = new Mutex();
         public struct Сoords
         {
             public int x;
@@ -59,21 +60,25 @@ namespace ShellObj
         {
             while (true)
             {
+                tmut.WaitOne();
                 if (coos.y < 2)
+                {
                     Erase();
-                Console.CursorVisible = false;
+                    tmut.ReleaseMutex();
+                    break;
+                }
                 //Erase();
                 //coos.y -= 1;
-                if (coos.y < 2)
-                    break;
                 Console.MoveBufferArea(coos.x, coos.y, 2, 1, coos.x , coos.y-2);
                 coos.y-= 2;
                 Thread.Sleep(20);
+                tmut.ReleaseMutex();
             }
             
         }
         public void PrintBody()
         {
+            tmut.WaitOne();
             try
             {
                 Console.SetCursorPosition(coos.x, coos.y);
@@ -83,12 +88,14 @@ namespace ShellObj
             {
                 shellthread.Abort();
             }
-
+            tmut.ReleaseMutex();
         }
         public void Erase()
         {
+            tmut.WaitOne();
             Console.SetCursorPosition(coos.x,coos.y);
             Console.Write("  ");
+            tmut.ReleaseMutex();
         }
     }
 }

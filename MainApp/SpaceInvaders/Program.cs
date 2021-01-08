@@ -27,6 +27,8 @@ namespace SpaceInvaders
             var activeXLibType = Type.GetTypeFromProgID(ProgId)
                 ?? throw new ArgumentException($"не удалось загрузить ActiveX object c ProgId {ProgId}");
             dynamic activeXobj = Activator.CreateInstance(activeXLibType);
+
+            //CreatePlane();
             InitPlaneCreator();
 
 
@@ -52,6 +54,9 @@ namespace SpaceInvaders
                     ?? throw new ArgumentException($"не удалось загрузить ActiveX object c ProgId PlaneObj");
                 dynamic plane = Activator.CreateInstance(activeXLibType1);
             }
+
+            //Type elib = Type.GetTypeFromProgID("ConsoleDrawing");
+            //dynamic CD = Activator.CreateInstance(activeXLibType);
 
 
             //char[,] con = new ;

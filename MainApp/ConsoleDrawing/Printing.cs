@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Runtime.InteropServices;
 using System.Reflection;
 
@@ -21,6 +21,7 @@ namespace ConsoleDrawing
     [ComVisible(true)]
     public class Printing : IPrinting
     {
+        public Mutex tmut = new Mutex();
         //public string PlaneBody1 = "  /######\\  ";
         //public string PlaneBody2 = " //  __###\\ ";
         //public string PlaneBody3 = "/####__####\\";
@@ -31,19 +32,23 @@ namespace ConsoleDrawing
         }
         public void ErasePlane(int x, int y)
         {
-            for(int i = 0; i < 3; i++)
+            tmut.WaitOne();
+            for (int i = 0; i < 3; i++)
             {
                 Console.SetCursorPosition(x,y+i);
                 Console.Write("             ");
             }
+            tmut.ReleaseMutex();
         }
         public void PrintPlane(int x,int y)
         {
-            for(int i = 0; i < 3; i++)
+            tmut.WaitOne();
+            for (int i = 0; i < 3; i++)
             {
                 Console.SetCursorPosition(x,y + i);
                 Console.Write(PlaneBody[i]);
             }
+            tmut.ReleaseMutex();
         }
         public string ReadString(short x,short y,short width)
         {

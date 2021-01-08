@@ -30,11 +30,7 @@ namespace TachankaObj
         [DispId(4)]
         void CheckKeyEvent();
         [DispId(5)]
-        void TransportTank(int x, int y);
-        [DispId(6)]
         void Erase();
-        [DispId(7)]
-        void PrintBody(char item);
 
     }
 
@@ -43,13 +39,13 @@ namespace TachankaObj
     [ComVisible(true)]
     public class Tachanka : Itachanka
     {
+        private System.Timers.Timer reltimer;
         public static string ProgId2 = "ShellObj";
         string bodyline1 = "   ##   ";
         string bodyline2 = "   ##   ";
         string bodyline3 = "########";
         string bodyline4 = "########";
 
-        int timerinf = 0;
         public  Mutex tmut = new Mutex();
         public delegate void MoveHandler(ConsoleKeyInfo key, Tachanka obj);
         public event MoveHandler keywaspressed;
@@ -63,6 +59,8 @@ namespace TachankaObj
         //private int[] topleft = new int[2];
         public  ThreadStart st1;
         public  Thread keythread;
+
+        bool possibletoshoot;
         
         public Tachanka()
         {
@@ -74,7 +72,7 @@ namespace TachankaObj
             keythread = new Thread(st1);
             keythread.Start();
             keywaspressed += Tachanka_keywaspressed;
-
+            tmut.WaitOne();
             Console.SetCursorPosition(topleft.x, topleft.y);
             Console.Write(bodyline1);
             Console.SetCursorPosition(topleft.x, topleft.y + 1);
@@ -83,7 +81,8 @@ namespace TachankaObj
             Console.Write(bodyline3);
             Console.SetCursorPosition(topleft.x, topleft.y + 3);
             Console.Write(bodyline4);
-
+            tmut.ReleaseMutex();
+            InitRelTimer();
         }
        public void SetBodyXY(int x, int y)
         {
@@ -92,6 +91,7 @@ namespace TachankaObj
         }
         public void MoveLeft()
         {
+            tmut.WaitOne();
             if(topleft.x == 0)
             {
                 Console.MoveBufferArea(topleft.x, topleft.y, 8, 4, Console.BufferWidth-8, topleft.y);
@@ -101,55 +101,35 @@ namespace TachankaObj
             {
                 Console.MoveBufferArea(topleft.x, topleft.y, 8, 4, topleft.x - 2, topleft.y);
                 topleft.x-=2;
-            }  
+            }
+            tmut.ReleaseMutex();
         }
         public void MoveRight()
         {
-            try
+            tmut.WaitOne();
+            if (topleft.x + 10 > Console.BufferWidth)
             {
-                if (topleft.x + 10 > Console.BufferWidth)
-                {
-                    Console.MoveBufferArea(topleft.x, topleft.y, 8, 4, 0, topleft.y);
-                    topleft.x = 0;
-                }
-                else
-                {
-                    Console.MoveBufferArea(topleft.x, topleft.y, 8, 4, topleft.x + 2, topleft.y);
-                    topleft.x+=2;
-                }
-
-            }
-            catch (Exception)
-            {
+                Console.MoveBufferArea(topleft.x, topleft.y, 8, 4, 0, topleft.y);
                 topleft.x = 0;
-                return;
             }
-            
+            else
+            {
+                Console.MoveBufferArea(topleft.x, topleft.y, 8, 4, topleft.x + 2, topleft.y);
+                topleft.x += 2;
+            }
+            tmut.ReleaseMutex();
         }
 
         public void Shoot()
         {
-            TimerCallback tm;
-            Timer timer;
-            if (timerinf == 0)
+            if (possibletoshoot == true)
             {
                 var ob1 = Type.GetTypeFromProgID(ProgId2)
                     ?? throw new ArgumentException($"не удалось загрузить ActiveX object c ProgId {ProgId2}");
                 dynamic obj2 = Activator.CreateInstance(ob1, topleft.x + 3);
-
-
-                timerinf = 0;
+                possibletoshoot = false;
+                InitRelTimer();
             }
-            tm = new TimerCallback(Count);
-            timer = new Timer(tm, timerinf, 1000, 1000);
-
-        }
-
-        public void Count(object obj)
-        {
-            int x = (int)obj;
-            x = 0;
-            Thread.CurrentThread.Abort();
         }
 
         public void CheckKeyEvent()
@@ -163,50 +143,30 @@ namespace TachankaObj
                 Thread.Sleep(1);
             }
         }
-        public void TransportTank(int x,int y)
-        {
-            Erase();
-            SetBodyXY(x,y);
-            PrintBody('#');
-        }
         public void Erase()
         {
+            tmut.WaitOne();
             for (int i = 0; i < 4; i++)
             {
                 Console.SetCursorPosition(topleft.x,topleft.y + i);
                 Console.Write("        ");
             }
-        }
-        public void PrintBody(char item)
-        {
-            try
-            {
-                
-                    //Console.SetCursorPosition(topleft.x, topleft.y);
-                    //Console.Write(bodyline1);
-                    //Console.SetCursorPosition(topleft.x, topleft.y + 1);
-                    //Console.Write(bodyline2);
-                    //Console.SetCursorPosition(topleft.x, topleft.y + 2);
-                    //Console.Write(bodyline3);
-                    //Console.SetCursorPosition(topleft.x, topleft.y + 3);
-                    //Console.Write(bodyline4);
-            }
-            catch (Exception)
-            {
-                if (topleft.x < 0)
-                {
-                    topleft.x = Console.BufferWidth - 8;
-                    PrintBody(item);
-                }
-                else
-                {
-                    topleft.x = 0;
-                    PrintBody(item);
-                }
-                return;
-            }
+            tmut.ReleaseMutex();
         }
 
+        void reload(Object source, System.Timers.ElapsedEventArgs e)
+        {
+            possibletoshoot = true;
+            reltimer.Dispose();
+        }
+
+        void InitRelTimer()
+        {
+            reltimer = new System.Timers.Timer(500);
+            reltimer.Elapsed += reload;
+            reltimer.AutoReset = true;
+            reltimer.Enabled = true;
+        }
 
         private void Tachanka_keywaspressed(ConsoleKeyInfo key, Tachanka obj)
         {
@@ -223,9 +183,7 @@ namespace TachankaObj
             {
                 obj.Shoot();
             }
-            bool h = obj.keythread.IsAlive;
             obj.tmut.ReleaseMutex();
-            h = obj.keythread.IsAlive;
         }
     }
 }

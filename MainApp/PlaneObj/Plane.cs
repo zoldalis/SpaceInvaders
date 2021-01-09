@@ -27,6 +27,7 @@ namespace PlaneObj
         private Timer moveTimer;
         private Timer checkTimer;
         private Timer godowntmr;
+        private Timer dropbombrtmr;
 
         public System.Threading.ThreadStart st1;
         public System.Threading.Thread keythread;
@@ -56,6 +57,7 @@ namespace PlaneObj
             InitMoveTimer();
             InitCheckTimer();
             InitGoDownTimer();
+            InitDropBombTimer();
 
 
         }
@@ -72,7 +74,10 @@ namespace PlaneObj
         {
             if (IsIntact() == false)
             {
-                DestuctPlane();
+                int score = Convert.ToInt32(Console.Title.Split(':')[1]);
+                score += 1;
+                Console.Title = $"SpaceInvaders! Your Score:{score}";
+                Destruct();
                 CD.ErasePlane(topleft.x, topleft.y);
             }
         }
@@ -81,7 +86,7 @@ namespace PlaneObj
             tmut.WaitOne();
             if (IsIntact() == false)
             {
-                DestuctPlane();
+                Destruct();
                 CD.ErasePlane(topleft.x, topleft.y);
             }
             else
@@ -114,14 +119,23 @@ namespace PlaneObj
             }
             else
             {
-                DestuctPlane();
+                Destruct();
                 CD.ErasePlane(topleft.x, topleft.y);
                 Console.Clear();
                 Console.SetCursorPosition(Console.BufferWidth / 2 - 5, Console.BufferHeight / 2);
-                Console.Write("            " + "GAME OVER");
+                Console.Write("            " + "GAME OVER" + "  " + $"YourScore:{Convert.ToInt32(Console.Title.Split(':')[1])}, Great job!" );
             }
             tmut.ReleaseMutex();
         }
+
+        void DropBomb(Object source, ElapsedEventArgs e)
+        {
+            var libtype = Type.GetTypeFromProgID("BombObj");
+            dynamic bomb = Activator.CreateInstance(libtype,topleft.x + 3, topleft.y + 4);
+            Random createinterval = new Random();
+            dropbombrtmr.Interval = createinterval.Next(1500, 3000);
+        }
+
         void InitDirTimer()
         {
             dirTimer = new Timer(2531);
@@ -146,17 +160,27 @@ namespace PlaneObj
         }
         void InitGoDownTimer()
         {
-            godowntmr = new Timer(931);
+            godowntmr = new Timer(200);
             godowntmr.Elapsed += GoDown;
             godowntmr.AutoReset = true;
             godowntmr.Enabled = true;
         }
-        void DestuctPlane()
+        public void Destruct()
         {
+            CD.ErasePlane(topleft.x, topleft.y);
             dirTimer.Dispose();
             moveTimer.Dispose();
             checkTimer.Dispose();
             godowntmr.Dispose();
+            dropbombrtmr.Dispose();
+        }
+
+        void InitDropBombTimer()
+        {
+            dropbombrtmr = new Timer(1500);
+            dropbombrtmr.Elapsed += DropBomb;
+            dropbombrtmr.AutoReset = true;
+            dropbombrtmr.Enabled = true;
         }
 
     }

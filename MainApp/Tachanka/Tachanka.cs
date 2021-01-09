@@ -131,7 +131,7 @@ namespace TachankaObj
                 InitRelTimer();
             }
         }
-
+      
         public void CheckKeyEvent()
         {
             while (true)
@@ -184,6 +184,13 @@ namespace TachankaObj
                 obj.Shoot();
             }
             obj.tmut.ReleaseMutex();
+        }
+
+        public void Destruct()
+        {
+            Erase();
+            keywaspressed -= Tachanka_keywaspressed;
+            Thread.CurrentThread.Abort();
         }
     }
 }

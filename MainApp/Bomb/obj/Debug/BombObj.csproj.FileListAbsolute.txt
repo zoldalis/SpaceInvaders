@@ -1,0 +1,6 @@
+C:\SpaceInvaders\MainApp\Bomb\bin\Debug\Bomb.dll
+C:\SpaceInvaders\MainApp\Bomb\bin\Debug\Bomb.pdb
+C:\SpaceInvaders\MainApp\Bomb\bin\Debug\Bomb.tlb
+C:\SpaceInvaders\MainApp\Bomb\obj\Debug\BombObj.csproj.CoreCompileInputs.cache
+C:\SpaceInvaders\MainApp\Bomb\obj\Debug\Bomb.dll
+C:\SpaceInvaders\MainApp\Bomb\obj\Debug\Bomb.pdb

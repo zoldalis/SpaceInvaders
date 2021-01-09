@@ -86,6 +86,7 @@ namespace ShellObj
             }
             catch (Exception)
             {
+                Erase();
                 shellthread.Abort();
             }
             tmut.ReleaseMutex();
@@ -97,6 +98,9 @@ namespace ShellObj
             Console.Write("  ");
             tmut.ReleaseMutex();
         }
+
+
+
     }
 }
 

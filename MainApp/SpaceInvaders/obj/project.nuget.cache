@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "XpiqyXfubHbzkLaTVY1m2i2FMI6jwQsO+slJfvM1jzjb+DhZOrbdz0X5bl304zYGx+by0eX1hIMED2LVK7jU8A==",
+  "dgSpecHash": "pnrvIEEH9xrPwGVI79prLW9VaWa9Xwmzv1CoNvXCgfFolPhfrIDcqI90Fw54zBVayfVU8qxaHu0MxnxUV9taBw==",
   "success": true,
   "projectFilePath": "C:\\SpaceInvaders\\MainApp\\SpaceInvaders\\SpaceInvaders.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\mikel\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512"
+  ],
   "logs": []
 }

@@ -2,35 +2,61 @@
 using System.Collections.ObjectModel;
 using System.Security.AccessControl;
 //using TachankaObj;
-using System.Threading;
+using System.Timers;
 using System.Runtime.InteropServices;
-
+using System.Collections.Generic;
+using Microsoft.CSharp;
 
 namespace SpaceInvaders
 {
-    class Program
+    public class Program
     {
-        private static System.Timers.Timer planecreator;
+        public System.Threading.Mutex tmut = new System.Threading.Mutex();
+
+        static List<dynamic> Instances = new List<dynamic>();
+
+        static Timer planecreator;
+        static Timer checkonstate;
         private static string ProgId => "TachankaObj";
         private static string ProgId2 => "ShellObj";
 
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-
-
-            Console.Title = "SpaceInvaders";
+            
+            
+            Console.Title = "SpaceInvaders! Your Score :0";
             Console.SetBufferSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
-
             Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
             Console.CursorVisible = false;
 
             var activeXLibType = Type.GetTypeFromProgID(ProgId)
                 ?? throw new ArgumentException($"не удалось загрузить ActiveX object c ProgId {ProgId}");
-            dynamic activeXobj = Activator.CreateInstance(activeXLibType);
+            dynamic tachanka = Activator.CreateInstance(activeXLibType);
 
-            //CreatePlane();
+            
+
+            //CreatePlane
             InitPlaneCreator();
+            InitCheckOnState();
 
+            void checkstate(Object source, ElapsedEventArgs e)
+            {
+                Type CDlibtype = Type.GetTypeFromProgID("ConsoleDrawing");
+                dynamic CD = Activator.CreateInstance(CDlibtype);
+                string line = CD.ReadString((short)(Console.BufferWidth / 2 - 5), (short)(Console.BufferHeight / 2), 21, 1);
+                if (line == "            GAME OVER")
+                {
+                    ClearObjs();
+                }
+            }
+
+            void InitCheckOnState()
+            {
+                checkonstate = new Timer(2);
+                checkonstate.Elapsed += checkstate;
+                checkonstate.AutoReset = true;
+                checkonstate.Enabled = true;
+            }
 
             void InitPlaneCreator()
             {
@@ -46,6 +72,9 @@ namespace SpaceInvaders
                 var activeXLibType1 = Type.GetTypeFromProgID("PlaneObj")
                     ?? throw new ArgumentException($"не удалось загрузить ActiveX object c ProgId PlaneObj");
                 dynamic plane = Activator.CreateInstance(activeXLibType1);
+                Instances.Add(plane);
+                Random createinterval = new Random();
+                planecreator.Interval = createinterval.Next(4000, 7000);
             }
 
             void CreatePlane()
@@ -53,30 +82,27 @@ namespace SpaceInvaders
                 var activeXLibType1 = Type.GetTypeFromProgID("PlaneObj")
                     ?? throw new ArgumentException($"не удалось загрузить ActiveX object c ProgId PlaneObj");
                 dynamic plane = Activator.CreateInstance(activeXLibType1);
+                Instances.Add(plane);
             }
 
-            //Type elib = Type.GetTypeFromProgID("ConsoleDrawing");
-            //dynamic CD = Activator.CreateInstance(activeXLibType);
-
-
-            //char[,] con = new ;
-
-
-
-
-            //var ob1 = Type.GetTypeFromProgID(ProgId2)
-            //    ?? throw new ArgumentException($"не удалось загрузить ActiveX object c ProgId {ProgId2}");
-            //dynamic obj2 = Activator.CreateInstance(ob1, 15);
-
-
-
-
-            //Tachanka tachanka = new Tachanka(); 
-
-
+            void ClearObjs()
+            {
+                planecreator.Dispose();
+                checkonstate.Dispose();
+                foreach (var item in Instances)
+                {
+                    if (item != null)
+                        item.Destruct();
+                }
+                tachanka.Destruct();
+            }
 
         }
+
+
+
         
+
 
 
     }

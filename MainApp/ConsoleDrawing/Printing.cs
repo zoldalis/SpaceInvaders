@@ -60,6 +60,15 @@ namespace ConsoleDrawing
             }
             return output;
         }
+        public string ReadString(short x, short y, short width,short height)
+        {
+            string output = "";
+            foreach (string line in ConsoleReader.ReadFromBuffer(x, y, width, height))
+            {
+                    output = line;
+            }
+            return output;
+        }
         public void PlaneMove(ref string direction,ref int x, ref int y)
         {
             if (direction == "right")
@@ -78,6 +87,7 @@ namespace ConsoleDrawing
             
             if (direction == "left")
             {
+                tmut.WaitOne();
                 if (x - 2 > 0)
                 {
                     Console.MoveBufferArea(x, y, 13, 3, x - 2, y);
@@ -88,9 +98,11 @@ namespace ConsoleDrawing
                     direction = "right";
                     PlaneMove(ref direction, ref x, ref y);
                 }
+                tmut.ReleaseMutex();
             }
             if (direction == "down")
             {
+                tmut.WaitOne();
                 if (y + 6 < Console.BufferHeight)
                 {
                     Console.MoveBufferArea(x, y, 13, 3, x, y + 1);
@@ -100,6 +112,7 @@ namespace ConsoleDrawing
                 {
                     ErasePlane(x,y);
                 }
+                tmut.ReleaseMutex();
             }
         }
     }

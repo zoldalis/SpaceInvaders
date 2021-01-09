@@ -6,4 +6,3 @@ C:\SpaceInvaders\MainApp\SpaceInvaders\bin\Debug\net48\SpaceInvaders.exe
 C:\SpaceInvaders\MainApp\SpaceInvaders\bin\Debug\net48\SpaceInvaders.pdb
 C:\SpaceInvaders\MainApp\SpaceInvaders\obj\Debug\net48\SpaceInvaders.exe
 C:\SpaceInvaders\MainApp\SpaceInvaders\obj\Debug\net48\SpaceInvaders.pdb
-C:\SpaceInvaders\MainApp\SpaceInvaders\obj\Debug\net48\SpaceInvaders.csprojAssemblyReference.cache

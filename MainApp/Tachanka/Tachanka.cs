@@ -49,7 +49,6 @@ namespace TachankaObj
         public  Mutex tmut = new Mutex();
         public delegate void MoveHandler(ConsoleKeyInfo key, Tachanka obj);
         public event MoveHandler keywaspressed;
-        private int[,] bodycoords = new int[20, 2];
         public struct Topleft
         {
             public int x;
@@ -65,7 +64,6 @@ namespace TachankaObj
         public Tachanka()
         {
             SetBodyXY(Console.BufferWidth / 2, Console.BufferHeight - 4);
-
 
             //PrintBody('#');
             st1 = new ThreadStart(CheckKeyEvent);

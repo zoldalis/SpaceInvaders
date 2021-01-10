@@ -11,7 +11,8 @@ namespace PlaneObj
     [Guid("04cbda1a-8cd1-44ce-8316-7ad353dfbd16")]
     interface IPlane
     {
-
+        [DispId(1)]
+        void Destruct();
     }
   
     [ProgId("PlaneObj")]
@@ -64,7 +65,9 @@ namespace PlaneObj
 
         public bool IsIntact()
         {
+            tmut.WaitOne();
             string line = CD.ReadString((short)topleft.x, (short)topleft.y,13);
+            tmut.ReleaseMutex();
             if (line.Contains("/\\"))
                 return false;
             else
@@ -72,6 +75,7 @@ namespace PlaneObj
         }
         void checkCondition(Object source, ElapsedEventArgs e)
         {
+            tmut.WaitOne();
             if (IsIntact() == false)
             {
                 int score = Convert.ToInt32(Console.Title.Split(':')[1]);
@@ -80,6 +84,7 @@ namespace PlaneObj
                 Destruct();
                 CD.ErasePlane(topleft.x, topleft.y);
             }
+            tmut.ReleaseMutex();
         }
         void moving(Object source, ElapsedEventArgs e)
         {
@@ -115,7 +120,6 @@ namespace PlaneObj
             if (topleft.y + 6 < Console.BufferHeight)
             { 
                 CD.PlaneMove(ref j, ref topleft.x, ref topleft.y);
-                
             }
             else
             {
@@ -123,7 +127,7 @@ namespace PlaneObj
                 CD.ErasePlane(topleft.x, topleft.y);
                 Console.Clear();
                 Console.SetCursorPosition(Console.BufferWidth / 2 - 5, Console.BufferHeight / 2);
-                Console.Write("            " + "GAME OVER" + "  " + $"YourScore:{Convert.ToInt32(Console.Title.Split(':')[1])}, Great job!" );
+                Console.Write("            " + "GAME OVER" + "  " + $"Your Score:{Convert.ToInt32(Console.Title.Split(':')[1])}, Great job!" );
             }
             tmut.ReleaseMutex();
         }
@@ -142,7 +146,6 @@ namespace PlaneObj
             dirTimer.Elapsed += cngdirection;
             dirTimer.AutoReset = true;
             dirTimer.Enabled = true;
-            
         }
         void InitMoveTimer()
         {
@@ -153,7 +156,7 @@ namespace PlaneObj
         }
         void InitCheckTimer()
         {
-            checkTimer = new Timer(25);
+            checkTimer = new Timer(5);
             checkTimer.Elapsed += checkCondition;
             checkTimer.AutoReset = true;
             checkTimer.Enabled = true;
@@ -167,12 +170,14 @@ namespace PlaneObj
         }
         public void Destruct()
         {
+            tmut.WaitOne();
             CD.ErasePlane(topleft.x, topleft.y);
             dirTimer.Dispose();
             moveTimer.Dispose();
             checkTimer.Dispose();
             godowntmr.Dispose();
             dropbombrtmr.Dispose();
+            tmut.ReleaseMutex();
         }
 
         void InitDropBombTimer()

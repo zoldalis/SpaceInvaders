@@ -33,11 +33,14 @@ namespace SpaceInvaders
                 ?? throw new ArgumentException($"не удалось загрузить ActiveX object c ProgId {ProgId}");
             dynamic tachanka = Activator.CreateInstance(activeXLibType);
 
-            
 
-            //CreatePlane
+
             InitPlaneCreator();
+            //CreatePlane();
             InitCheckOnState();
+
+            //var libtype = Type.GetTypeFromProgID("BombObj");
+           // dynamic bomb = Activator.CreateInstance(libtype, Console.BufferWidth/2, 1);
 
             void checkstate(Object source, ElapsedEventArgs e)
             {
@@ -61,7 +64,7 @@ namespace SpaceInvaders
             void InitPlaneCreator()
             {
                 CreatePlane();
-                planecreator = new System.Timers.Timer(4000);
+                planecreator = new System.Timers.Timer(3000);
                 planecreator.Elapsed += createPlane;
                 planecreator.AutoReset = true;
                 planecreator.Enabled = true;
@@ -74,7 +77,10 @@ namespace SpaceInvaders
                 dynamic plane = Activator.CreateInstance(activeXLibType1);
                 Instances.Add(plane);
                 Random createinterval = new Random();
-                planecreator.Interval = createinterval.Next(4000, 7000);
+                if (planecreator.Interval > 1000)
+                {
+                    planecreator.Interval -= 25;
+                }
             }
 
             void CreatePlane()
@@ -87,8 +93,15 @@ namespace SpaceInvaders
 
             void ClearObjs()
             {
-                planecreator.Dispose();
-                checkonstate.Dispose();
+                try
+                {
+                    planecreator.Dispose();
+                    checkonstate.Dispose();
+                }
+                catch (Exception)
+                {
+                }
+                
                 foreach (var item in Instances)
                 {
                     if (item != null)

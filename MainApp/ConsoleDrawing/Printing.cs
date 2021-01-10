@@ -15,6 +15,9 @@ namespace ConsoleDrawing
         void PrintPlane(int x, int y);
         [DispId(2)]
         void ErasePlane(int x, int y);
+        [DispId(3)]
+        string ReadString(short x, short y, short width);
+        string ReadString(short x, short y, short width, short height);
     }
     [ProgId("ConsoleDrawing")]
     [Guid("1f49722f-65c6-42eb-a7c6-3aaf48037ee8"), ClassInterface(ClassInterfaceType.AutoDual)]
@@ -52,68 +55,82 @@ namespace ConsoleDrawing
         }
         public string ReadString(short x,short y,short width)
         {
+            tmut.WaitOne();
             string output = "";
             foreach (string line in ConsoleReader.ReadFromBuffer(x, y, width, 3))
             {
                 if (line.Contains("/\\"))
                     output =  line;
             }
+            tmut.ReleaseMutex();
             return output;
         }
         public string ReadString(short x, short y, short width,short height)
         {
+            tmut.WaitOne();
             string output = "";
             foreach (string line in ConsoleReader.ReadFromBuffer(x, y, width, height))
             {
                     output = line;
             }
+            tmut.ReleaseMutex();
             return output;
         }
         public void PlaneMove(ref string direction,ref int x, ref int y)
         {
-            if (direction == "right")
+            tmut.WaitOne();
+            try
             {
-                if (x + 2 < Console.BufferWidth - 14)
+                if (direction == "right")
                 {
-                    Console.MoveBufferArea(x, y, 13, 3, x + 2, y);
-                    x += 2;
+                    if (x + 2 < Console.BufferWidth - 14)
+                    {
+                        Console.MoveBufferArea(x, y, 13, 3, x + 2, y);
+                        x += 2;
+                    }
+                    else
+                    {
+                        direction = "left";
+                        PlaneMove(ref direction, ref x, ref y);
+                    }
                 }
-                else
+
+                if (direction == "left")
                 {
-                    direction = "left";
-                    PlaneMove(ref direction, ref x, ref y);
+
+                    if (x - 2 > 0)
+                    {
+                        Console.MoveBufferArea(x, y, 13, 3, x - 2, y);
+                        x -= 2;
+                    }
+                    else
+                    {
+                        direction = "right";
+                        PlaneMove(ref direction, ref x, ref y);
+                    }
+
                 }
+                if (direction == "down")
+                {
+
+                    if (y + 6 < Console.BufferHeight)
+                    {
+                        Console.MoveBufferArea(x, y, 13, 3, x, y + 1);
+                        y += 1;
+                    }
+                    else
+                    {
+                        ErasePlane(x, y);
+                    }
+
+                }
+            }
+            catch (Exception)
+            {
+
             }
             
-            if (direction == "left")
-            {
-                tmut.WaitOne();
-                if (x - 2 > 0)
-                {
-                    Console.MoveBufferArea(x, y, 13, 3, x - 2, y);
-                    x -= 2;
-                }
-                else
-                {
-                    direction = "right";
-                    PlaneMove(ref direction, ref x, ref y);
-                }
-                tmut.ReleaseMutex();
-            }
-            if (direction == "down")
-            {
-                tmut.WaitOne();
-                if (y + 6 < Console.BufferHeight)
-                {
-                    Console.MoveBufferArea(x, y, 13, 3, x, y + 1);
-                    y += 1;
-                }
-                else
-                {
-                    ErasePlane(x,y);
-                }
-                tmut.ReleaseMutex();
-            }
+            tmut.ReleaseMutex();
         }
     }
 }

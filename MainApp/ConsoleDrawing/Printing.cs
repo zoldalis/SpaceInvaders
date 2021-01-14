@@ -17,6 +17,7 @@ namespace ConsoleDrawing
         void ErasePlane(int x, int y);
         [DispId(3)]
         string ReadString(short x, short y, short width);
+        [DispId(4)]
         string ReadString(short x, short y, short width, short height);
     }
     [ProgId("ConsoleDrawing")]
@@ -28,7 +29,7 @@ namespace ConsoleDrawing
         //public string PlaneBody1 = "  /######\\  ";
         //public string PlaneBody2 = " //  __###\\ ";
         //public string PlaneBody3 = "/####__####\\";
-        public string[] PlaneBody = new string[3] {"  /######\\ "," //  __###\\","/####__####\\"};
+        public string[] PlaneBody = new string[3] {"  |------| "," ||  __###|","|####__####|"};
         public Printing()
         {
 
@@ -59,7 +60,7 @@ namespace ConsoleDrawing
             string output = "";
             foreach (string line in ConsoleReader.ReadFromBuffer(x, y, width, 3))
             {
-                if (line.Contains("/\\"))
+                if (line.Contains("/") | line.Contains("\\"))
                     output =  line;
             }
             tmut.ReleaseMutex();
@@ -85,8 +86,8 @@ namespace ConsoleDrawing
                 {
                     if (x + 2 < Console.BufferWidth - 14)
                     {
-                        Console.MoveBufferArea(x, y, 13, 3, x + 2, y);
-                        x += 2;
+                        Console.MoveBufferArea(x, y, 13, 3, x + 1, y);
+                        x += 1;
                     }
                     else
                     {
@@ -97,22 +98,19 @@ namespace ConsoleDrawing
 
                 if (direction == "left")
                 {
-
                     if (x - 2 > 0)
                     {
-                        Console.MoveBufferArea(x, y, 13, 3, x - 2, y);
-                        x -= 2;
+                        Console.MoveBufferArea(x, y, 13, 3, x - 1, y);
+                        x -= 1;
                     }
                     else
                     {
                         direction = "right";
                         PlaneMove(ref direction, ref x, ref y);
                     }
-
                 }
                 if (direction == "down")
                 {
-
                     if (y + 6 < Console.BufferHeight)
                     {
                         Console.MoveBufferArea(x, y, 13, 3, x, y + 1);

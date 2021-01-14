@@ -87,17 +87,17 @@ namespace Bomb
                 {
                     if(line.Contains("/") | line.Contains("\\"))
                     {
-                        Console.MoveBufferArea(coos.x, coos.y, 2, 1, coos.x, coos.y + 1);
-                        coos.y += 1;
+                        Console.MoveBufferArea(coos.x, coos.y, 2, 1, coos.x, coos.y + 3);
+                        coos.y += 3;
                     }
                     else
                     {
-                        Console.MoveBufferArea(coos.x, coos.y, 2, 1, coos.x, coos.y + 2);
-                        coos.y += 2;
+                        Console.MoveBufferArea(coos.x, coos.y, 2, 1, coos.x, coos.y + 1);
+                        coos.y += 1;
                     }
                     
                 }
-                Thread.Sleep(40);
+                Thread.Sleep(20);
                 tmut.ReleaseMutex();
             }
         }

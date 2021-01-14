@@ -68,7 +68,7 @@ namespace PlaneObj
             tmut.WaitOne();
             string line = CD.ReadString((short)topleft.x, (short)topleft.y,13);
             tmut.ReleaseMutex();
-            if (line.Contains("/\\"))
+            if (line.Contains("/") | line.Contains("\\"))
                 return false;
             else
                 return true;
@@ -91,6 +91,9 @@ namespace PlaneObj
             tmut.WaitOne();
             if (IsIntact() == false)
             {
+                int score = Convert.ToInt32(Console.Title.Split(':')[1]);
+                score += 1;
+                Console.Title = $"SpaceInvaders! Your Score:{score}";
                 Destruct();
                 CD.ErasePlane(topleft.x, topleft.y);
             }
@@ -135,7 +138,7 @@ namespace PlaneObj
         void DropBomb(Object source, ElapsedEventArgs e)
         {
             var libtype = Type.GetTypeFromProgID("BombObj");
-            dynamic bomb = Activator.CreateInstance(libtype,topleft.x + 3, topleft.y + 4);
+            dynamic bomb = Activator.CreateInstance(libtype,topleft.x + 3, topleft.y + 5);
             Random createinterval = new Random();
             dropbombrtmr.Interval = createinterval.Next(1500, 3000);
         }
@@ -149,14 +152,14 @@ namespace PlaneObj
         }
         void InitMoveTimer()
         {
-            moveTimer = new Timer(200);
+            moveTimer = new Timer(100);
             moveTimer.Elapsed += moving;
             moveTimer.AutoReset = true;
             moveTimer.Enabled = true;
         }
         void InitCheckTimer()
         {
-            checkTimer = new Timer(5);
+            checkTimer = new Timer(1);
             checkTimer.Elapsed += checkCondition;
             checkTimer.AutoReset = true;
             checkTimer.Enabled = true;

@@ -69,9 +69,9 @@ namespace ShellObj
                 }
                 //Erase();
                 //coos.y -= 1;
-                Console.MoveBufferArea(coos.x, coos.y, 2, 1, coos.x , coos.y-2);
-                coos.y-= 2;
-                Thread.Sleep(20);
+                Console.MoveBufferArea(coos.x, coos.y, 2, 1, coos.x , coos.y-1);
+                coos.y-= 1;
+                Thread.Sleep(10);
                 tmut.ReleaseMutex();
             }
             

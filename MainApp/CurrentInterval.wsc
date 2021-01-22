@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<component>
+  <?component error="true" debug="true"?>
+
+  <registration
+      description="Calculating current interval"
+      progid="CurrentScore"
+      version="1.00"
+      classid="{dcd37b95-47de-43d0-a0db-74240d0197b5}"
+ >
+  </registration>
+
+  <public>
+    <method name="Increase"  dispid = "1">
+      <PARAMETER name="nVal"/>
+    </method>
+    <method name ="IfLess" dispid ="2">
+      <PARAMETER name="x"/>
+      <PARAMETER name="y"/>
+    </method>
+  </public>
+
+  <script language="VBScript">
+    <![CDATA[
+
+
+Function Increase(nVal)
+   Increase = nVal + 1
+End Function
+
+Function IfLess(x,y)
+  If (x < y) Then
+  IfLess = true
+  Else
+  IfLess = false
+  End If
+ End Function
+
+ ]]>
+  </script>
+</component>

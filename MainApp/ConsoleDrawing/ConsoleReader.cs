@@ -9,6 +9,14 @@ namespace ConsoleDrawing
 {
     public class ConsoleReader
     {
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern bool ReadConsoleOutput(IntPtr hConsoleOutput, IntPtr lpBuffer, COORD dwBufferSize, COORD dwBufferCoord, ref SMALL_RECT lpReadRegion);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern IntPtr GetStdHandle(int nStdHandle);
+
+        const int STD_OUTPUT_HANDLE = -11;
+
         public static IEnumerable<string> ReadFromBuffer(short x, short y, short width, short height)
         {
             IntPtr buffer = Marshal.AllocHGlobal(width * height * Marshal.SizeOf(typeof(CHAR_INFO)));
@@ -27,8 +35,7 @@ namespace ConsoleDrawing
                 COORD size = new COORD();
                 size.X = width;
                 size.Y = height;
-
-                const int STD_OUTPUT_HANDLE = -11;
+                
                 if (!ReadConsoleOutput(GetStdHandle(STD_OUTPUT_HANDLE), buffer, size, coord, ref rc))
                 {
                     // 'Not enough storage is available to process this command' may be raised for buffer size > 64K (see ReadConsoleOutput doc.)
@@ -89,10 +96,6 @@ namespace ConsoleDrawing
             public COORD dwMaximumWindowSize;
         }
 
-        [DllImport("kernel32.dll", SetLastError = true)]
-        private static extern bool ReadConsoleOutput(IntPtr hConsoleOutput, IntPtr lpBuffer, COORD dwBufferSize, COORD dwBufferCoord, ref SMALL_RECT lpReadRegion);
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        private static extern IntPtr GetStdHandle(int nStdHandle);
+       
     }
 }

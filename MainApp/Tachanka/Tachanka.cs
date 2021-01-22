@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Runtime.InteropServices;
+using System.IO.MemoryMappedFiles;
+
 //using ShellObj;
 using System.Reflection;
 
@@ -41,10 +43,10 @@ namespace TachankaObj
     {
         private System.Timers.Timer reltimer;
         public static string ProgId2 = "ShellObj";
-        string bodyline1 = "   ##   ";
-        string bodyline2 = "   ##   ";
-        string bodyline3 = "########";
-        string bodyline4 = "########";
+        string bodyline1;
+        string bodyline2;
+        string bodyline3;
+        string bodyline4;
 
         public  Mutex tmut = new Mutex();
         public delegate void MoveHandler(ConsoleKeyInfo key, Tachanka obj);
@@ -63,6 +65,22 @@ namespace TachankaObj
         
         public Tachanka()
         {
+
+
+            using (var mmFile = MemoryMappedFile.CreateFromFile(@"tachanka.txt", System.IO.FileMode.Open, "fileHandle"))
+            {
+                var myAccessor = mmFile.CreateViewAccessor();
+                var readOut = new byte[38];
+                myAccessor.ReadArray(0, readOut, 0, readOut.Length);
+                var finalValue = Encoding.ASCII.GetString(readOut);
+                bodyline1 = finalValue.Substring(0,8);
+                bodyline2 = finalValue.Substring(10, 8);
+                bodyline3 = finalValue.Substring(20, 8);
+                bodyline4 = finalValue.Substring(30, 8);
+            }
+
+
+
             SetBodyXY(Console.BufferWidth / 2, Console.BufferHeight - 4);
 
             //PrintBody('#');

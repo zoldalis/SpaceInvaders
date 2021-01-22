@@ -29,6 +29,9 @@ namespace SpaceInvaders
             Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
             Console.CursorVisible = false;
 
+
+            //CreateFromFile(String)
+
             var activeXLibType = Type.GetTypeFromProgID(ProgId)
                 ?? throw new ArgumentException($"не удалось загрузить ActiveX object c ProgId {ProgId}");
             dynamic tachanka = Activator.CreateInstance(activeXLibType);
@@ -40,14 +43,14 @@ namespace SpaceInvaders
             InitCheckOnState();
 
             //var libtype = Type.GetTypeFromProgID("BombObj");
-           // dynamic bomb = Activator.CreateInstance(libtype, Console.BufferWidth/2, 1);
+            //dynamic bomb = Activator.CreateInstance(libtype, Console.BufferWidth/2, 1);
 
             void checkstate(Object source, ElapsedEventArgs e)
             {
                 Type CDlibtype = Type.GetTypeFromProgID("ConsoleDrawing");
                 dynamic CD = Activator.CreateInstance(CDlibtype);
                 string line = CD.ReadString((short)(Console.BufferWidth / 2 - 5), (short)(Console.BufferHeight / 2), 21, 1);
-                if (line == "            GAME OVER")
+                if (line.Contains("GAME OVER"))
                 {
                     ClearObjs();
                 }

@@ -5,3 +5,4 @@ C:\SpaceInvaders\MainApp\PlaneObj\obj\Debug\PlaneObj.csproj.CoreCompileInputs.ca
 C:\SpaceInvaders\MainApp\PlaneObj\obj\Debug\PlaneObj.dll
 C:\SpaceInvaders\MainApp\PlaneObj\obj\Debug\PlaneObj.pdb
 C:\SpaceInvaders\MainApp\PlaneObj\obj\Debug\PlaneObj.csprojAssemblyReference.cache
+C:\SpaceInvaders\MainApp\PlaneObj\obj\Debug\PlaneObj.csproj.ResolveComReference.cache

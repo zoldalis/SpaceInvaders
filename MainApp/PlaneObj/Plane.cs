@@ -1,4 +1,7 @@
-﻿using System;
+﻿//#include <windows.h>
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -62,7 +65,6 @@ namespace PlaneObj
 
 
         }
-
         public bool IsIntact()
         {
             tmut.WaitOne();
@@ -79,9 +81,14 @@ namespace PlaneObj
             if (IsIntact() == false)
             {
                 int score = Convert.ToInt32(Console.Title.Split(':')[1]);
-                score += 1;
-                Console.Title = $"SpaceInvaders! Your Score:{score}";
+                dynamic wsc = (dynamic)Microsoft.VisualBasic.Interaction.GetObject(@"script:C:\SpaceInvaders\MainApp\CurrentInterval.wsc", null);
+                //var libtype = Type.GetTypeFromProgID("CurrentScore");
+                //dynamic CI = Activator.CreateInstance(libtype);
+                score = wsc.Increase(score);
+
+                //score ++;
                 Destruct();
+                Console.Title = $"SpaceInvaders! Your Score:{score}";
                 CD.ErasePlane(topleft.x, topleft.y);
             }
             tmut.ReleaseMutex();
@@ -93,8 +100,8 @@ namespace PlaneObj
             {
                 int score = Convert.ToInt32(Console.Title.Split(':')[1]);
                 score += 1;
-                Console.Title = $"SpaceInvaders! Your Score:{score}";
                 Destruct();
+                Console.Title = $"SpaceInvaders! Your Score:{score}";
                 CD.ErasePlane(topleft.x, topleft.y);
             }
             else
@@ -119,8 +126,9 @@ namespace PlaneObj
         void GoDown(Object source, ElapsedEventArgs e)
         {
             tmut.WaitOne();
+            dynamic wsc = (dynamic)Microsoft.VisualBasic.Interaction.GetObject(@"script:C:\SpaceInvaders\MainApp\CurrentInterval.wsc", null);
             string j = "down";
-            if (topleft.y + 6 < Console.BufferHeight)
+            if (wsc.IfLess(topleft.y + 6, Console.BufferHeight))
             { 
                 CD.PlaneMove(ref j, ref topleft.x, ref topleft.y);
             }

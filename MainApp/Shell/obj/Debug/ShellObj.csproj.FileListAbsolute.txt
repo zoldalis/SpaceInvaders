@@ -4,3 +4,6 @@ C:\SpaceInvaders\MainApp\Shell\bin\Debug\Shell.tlb
 C:\SpaceInvaders\MainApp\Shell\obj\Debug\ShellObj.csproj.CoreCompileInputs.cache
 C:\SpaceInvaders\MainApp\Shell\obj\Debug\Shell.dll
 C:\SpaceInvaders\MainApp\Shell\obj\Debug\Shell.pdb
+C:\SpaceInvaders\MainApp\Shell\obj\Debug\Interop.MSScriptControl.dll
+C:\SpaceInvaders\MainApp\Shell\obj\Debug\Interop.Scripting.dll
+C:\SpaceInvaders\MainApp\Shell\obj\Debug\ShellObj.csproj.ResolveComReference.cache
